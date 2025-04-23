@@ -17,9 +17,21 @@ on:
   schedule:
     - cron: '0 */2 * * *'
 
+  # 4️⃣ Trigger on declaration (e.g., via comment or issue label)
+  issue_comment:
+    types: [created]
+  issues:
+    types: [labeled]
+
 jobs:
   review-code:
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'push' || github.event_name == 'schedule' }}
+    if: >
+      github.event.workflow_run.conclusion == 'success' ||
+      github.event_name == 'push' ||
+      github.event_name == 'schedule' ||
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '/declare-review')) ||
+      (github.event_name == 'issues' && github.event.label.name == 'review-declaration')
+
     runs-on: ubuntu-latest
 
     steps:
