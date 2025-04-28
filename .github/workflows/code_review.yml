@@ -15,7 +15,7 @@ on:
 
   # 3️⃣ Scheduled run every 2 hours
   schedule:
-    - cron: '0 */2 * * *'
+   # - cron: '0 */2 * * *'
 
   # 4️⃣ Trigger on declaration (e.g., via comment or issue label)
   issue_comment:
